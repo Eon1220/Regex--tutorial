@@ -207,8 +207,119 @@ console.log("Matches for '\\S':", matchesNonWhitespace);
 ```
 
 ### Flags
+- Flags (or modifiers) are special characters that you can add to a regular expression to change its behavior. They help control aspects like case sensitivity, global matching, and more.
+
+Example: const text = "Hello world!\nHello Universe!";
+
+- /Hello/g: The g flag makes the regex match all occurrences of "Hello" in the text. Without the g flag, it would only find the first occurrence.
+
+```// g (Global) - Matches all occurrences of the pattern
+const patternGlobal = /Hello/g;
+const matchesGlobal = text.match(patternGlobal);
+console.log("Matches for 'Hello' with 'g' flag:", matchesGlobal);
+```
+- /hello/i: The i flag makes the regex match "hello" regardless of case. It finds "Hello" even though the case doesn't match exactly.
+
+```// i (Case Insensitive) - Matches 'hello' regardless of case
+const patternCaseInsensitive = /hello/i;
+const matchesCaseInsensitive = text.match(patternCaseInsensitive);
+console.log("Matches for 'hello' with 'i' flag:", matchesCaseInsensitive);
+```
+- /^Hello/m: The m flag allows ^ to match "Hello" at the beginning of each line, not just the start of the whole string. In the text, "Hello" at the beginning of the second line is matched.
+
+```// m (Multiline) - Changes behavior of ^ and $
+const patternMultiline = /^Hello/m;
+const matchesMultiline = text.match(patternMultiline);
+console.log("Matches for '^Hello' with 'm' flag:", matchesMultiline);
+```
+- /Hello.world!/s: The s flag allows the . to match newline characters. So, this pattern matches "Hello" followed by any characters (including newlines) up to "world!".
+
+```// s (Dot All) - Makes . match newline characters
+const patternDotAll = /Hello.world!/s;
+const matchesDotAll = text.match(patternDotAll);
+console.log("Matches for 'Hello.world!' with 's' flag:", matchesDotAll);
+```
+- /\u{1F600}/u: The u flag allows matching Unicode characters beyond the basic multilingual plane. Here, it matches the 😀 emoji in the text.
+
+```// u (Unicode) - Matches Unicode characters
+const patternUnicode = /\u{1F600}/u; // Unicode for 😀
+const textUnicode = "😀";
+const matchesUnicode = textUnicode.match(patternUnicode);
+console.log("Matches for Unicode character with 'u' flag:", matchesUnicode);
+```
+- /Hello/y: The y flag makes the regex match "Hello" only if it starts exactly at the current position (lastIndex). By setting lastIndex to 13, the regex matches "Hello" starting from the 14th character of the text.
+
+```// y (Sticky) - Matches only from the current position
+const patternSticky = /Hello/y;
+const stickyRegex = new RegExp(patternSticky, 'y');
+stickyRegex.lastIndex = 13; // Set the position in the string to start matching
+const matchesSticky = stickyRegex.exec(text);
+console.log("Matches for 'Hello' with 'y' flag:", matchesSticky);
+```
 
 ### Grouping and Capturing
+- Grouping and capturing are techniques used to extract parts of a matched string and to apply quantifiers to multiple characters at once.
+
+Example: const text = "John Doe, Jane Smith, Bob Johnson";
+
+- /(\w+)\s(\w+)/g:
+    - (\w+): Captures one or more word characters (first name).
+    - \s: Matches a whitespace character (space).
+    - (\w+): Captures one or more word characters (surname).
+    - match[0]: Full match (e.g., "John Doe").
+    - match[1]: First capture group (e.g., "John").
+    - match[2]: Second capture group (e.g., "Doe").
+
+```// Grouping and Capturing
+// (John|Jane|Bob) captures the name part and (\w+) captures the surname
+const patternCapture = /(\w+)\s(\w+)/g;
+let match;
+console.log("Capturing groups:");
+while ((match = patternCapture.exec(text)) !== null) {
+    console.log(`Full match: ${match[0]}`);
+    console.log(`First name (Group 1): ${match[1]}`);
+    console.log(`Surname (Group 2): ${match[2]}`);
+}
+```
+- /(?:John|Jane|Bob)\s(\w+)/g:
+    - (?:John|Jane|Bob): Non-capturing group that matches one of the names.
+    - \s(\w+): Captures the surname.
+    - This pattern matches the names and surnames but only captures the surnames.
+
+```// Non-Capturing Groups
+// (?:John|Jane|Bob) matches names without capturing
+const patternNonCapture = /(?:John|Jane|Bob)\s(\w+)/g;
+const matchesNonCapture = text.match(patternNonCapture);
+console.log("\nNon-Capturing groups:");
+console.log("Matches:", matchesNonCapture);
+```
+- /(\w+)@(\w+)\.(\w+)|(\d{3})-(\d{4})/g:
+
+    - (\w+)@(\w+)\.(\w+): Captures email parts:
+        - (\w+): Username.
+        - @(\w+): Domain.
+        - \.(\w+): Top-level domain.
+    - (\d{3})-(\d{4}): Captures phone number parts:
+        - (\d{3}): Area code.
+        - -(\d{4}): Number.
+    - match2[0]: Full match (e.g., "user@example.com" or "555-1234").
+    - match2[1], match2[2], match2[3]: Email parts.
+    - match2[4], match2[5]: Phone number parts.
+
+```// Example with multiple capture groups
+const text2 = "My email is user@example.com and my phone number is 555-1234.";
+const patternEmailPhone = /(\w+)@(\w+)\.(\w+)|(\d{3})-(\d{4})/g;
+let match2;
+console.log("\nMultiple Capture Groups:");
+while ((match2 = patternEmailPhone.exec(text2)) !== null) {
+    console.log(`Full match: ${match2[0]}`);
+    console.log(`Email Username (Group 1): ${match2[1]}`);
+    console.log(`Email Domain (Group 2): ${match2[2]}`);
+    console.log(`Email Top-Level Domain (Group 3): ${match2[3]}`);
+    console.log(`Phone Area Code (Group 4): ${match2[4]}`);
+    console.log(`Phone Number (Group 5): ${match2[5]}`);
+}
+```
 
 ### Bracket Expressions
 
