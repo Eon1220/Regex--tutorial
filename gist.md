@@ -519,8 +519,62 @@ console.log("Matches for '((foo)) and ((bar))':", matchesParentheses); // Output
 ```
 
 ### Look-ahead and Look-behind
-- 
+- Look-ahead and look-behind are advanced features in regular expressions that allow you to perform assertions about what comes before or after a particular position in a string without including those characters in the match. They are very useful for complex pattern matching and validation.
+
+Example: const text = "The price is $123 and $456 but not $789";
+
+- Positive Look-Ahead /(?<=The price is )\$\d+/g:
+    - Pattern: (?<=The price is )\$\d+
+        - (?<=The price is ): Positive look-behind that asserts that the price must be preceded by "The price is ".
+        - \$\d+: Matches the price itself.
+    - Result: Matches "$123" because it is preceded by "The price is ".
+
+```
+// Positive Look-Ahead - Find prices that are followed by " and "
+const patternPositiveLookAhead = /\$\d+(?= and)/g;
+const matchesPositiveLookAhead = text.match(patternPositiveLookAhead);
+console.log("Positive Look-Ahead matches:", matchesPositiveLookAhead);
+// Output: [ '$123' ]
+```
+- Negative Look-Ahead /\$\d+(?! but not)/g:
+    - Pattern: \$\d+(?! but not)
+        - \$\d+: Matches a price.
+        - (?! but not): Negative look-ahead that asserts the price should not be followed by " but not ".
+    - Result: Matches "$123" and "$456" because "$789" is followed by " but not ". 
+
+```
+// Negative Look-Ahead - Find prices that are not followed by " but not "
+const patternNegativeLookAhead = /\$\d+(?! but not)/g;
+const matchesNegativeLookAhead = text.match(patternNegativeLookAhead);
+console.log("Negative Look-Ahead matches:", matchesNegativeLookAhead);
+// Output: [ '$123', '$456' ]
+```
+- Positive Look-Behind /(?<=The price is )\$\d+/g:
+    - Pattern: (?<=The price is )\$\d+
+        - (?<=The price is ): Positive look-behind that asserts that the price must be preceded by "The price is ".
+        - \$\d+: Matches the price itself.
+    - Result: Matches "$123" because it is preceded by "The price is ".
+```
+// Positive Look-Behind - Find prices that are preceded by "The price is "
+const patternPositiveLookBehind = (?<=The price is )\$\d+/g;
+const matchesPositiveLookBehind = text.match(patternPositiveLookBehind);
+console.log("Positive Look-Behind matches:", matchesPositiveLookBehind);
+// Output: [ '$123' ]
+```
+- Negative Look-Behind /(?<!The price is )\$\d+/g:
+    - Pattern: (?<!The price is )\$\d+
+        - (?<!The price is ): Negative look-behind that asserts the price must not be preceded by "The price is ".
+        - \$\d+: Matches the price itself.
+    - Result: Matches "$456" and "$789" because they are not preceded by "The price is ".
+```
+// Negative Look-Behind - Find prices not preceded by "The price is "
+const patternNegativeLookBehind = /(?<!The price is )\$\d+/g;
+const matchesNegativeLookBehind = text.match(patternNegativeLookBehind);
+console.log("Negative Look-Behind matches:", matchesNegativeLookBehind);
+// Output: [ '$456', '$789' ]
+```
 
 ## Author
 
-A short section about the author with a link to the author's GitHub profile (replace with your information and a link to your profile)
+This tutorial was writen by : Nicolas pace
+github link: [text](https://github.com/Eon1220)
