@@ -101,10 +101,110 @@ console.log("Matches for 'a{2,4}':", text.match(patternBetween));
 ```
 
 ### OR Operator
+- OR operator ( | ) is used to match one pattern or another. It allows you to specify multiple alternative patterns, where the regex will match if any one of them is found.
 
+Example text: const text = "I have a cat and a dog.";
+
+- /cat|dog/g: This regex matches either "cat" or "dog". The g flag (global) ensures all occurrences in the text are matched. In the example, it finds "cat" and "dog" in the text "I have a cat and a dog."
+
+```// cat|dog - Matches either "cat" or "dog"
+const patternOr = /cat|dog/g;
+const matchesOr = text.match(patternOr);
+console.log("Matches for 'cat|dog':", matchesOr);
+```
+- /apple|orange|banana/g: This regex matches "apple", "orange", or "banana". It finds all three fruits in the text "I like apple, orange, and banana." 
+
+```// apple|orange|banana - Matches "apple", "orange", or "banana"
+const text2 = "I like apple, orange, and banana.";
+const patternMultipleOr = /apple|orange|banana/g;
+const matchesMultipleOr = text2.match(patternMultipleOr);
+console.log("Matches for 'apple|orange|banana':", matchesMultipleOr);
+```
+- /cat|dog|fish/g: This regex matches "cat", "dog", or "fish". It finds "cat", "dog", and "fish" in the text "My cat and dog are friends with a fish."
+
+```// cat|dog|fish - Matches "cat", "dog", or "fish"
+const text3 = "My cat and dog are friends with a fish.";
+const patternThreeOptions = /cat|dog|fish/g;
+const matchesThreeOptions = text3.match(patternThreeOptions);
+console.log("Matches for 'cat|dog|fish':", matchesThreeOptions);
+```
+- /red|blue|green/g: This regex matches "red", "blue", or "green". It finds all these colors in the text "The color is red or blue or green."
+
+```// The OR operator can also be used with other patterns
+const text4 = "The color is red or blue or green.";
+const patternColors = /red|blue|green/g;
+const matchesColors = text4.match(patternColors);
+console.log("Matches for 'red|blue|green':", matchesColors);
+```
 
 ### Character Classes
+- Character classes are used to define a set of characters that you want to match. They provide a way to specify a range or a collection of characters that a single character in the input text should match.
 
+Example: const text = "Sample text: 123, a-z, A_B, !@#";
+
+- /[abc]/g: This regex matches any one character that is either 'a', 'b', or 'c'. The g flag ensures all occurrences are matched.
+
+```// [abc] - Matches any one of the characters 'a', 'b', or 'c'
+const patternClass = /[abc]/g;
+const matchesClass = text.match(patternClass);
+console.log("Matches for '[abc]':", matchesClass);
+```
+- /[^abc]/g: This regex matches any character that is not 'a', 'b', or 'c'. The g flag allows matching all such characters in the text.
+
+```// [^abc] - Matches any character except 'a', 'b', or 'c'
+const patternNegatedClass = /[^abc]/g;
+const matchesNegatedClass = text.match(patternNegatedClass);
+console.log("Matches for '[^abc]':", matchesNegatedClass);
+```
+- /[a-z]/g: This regex matches any lowercase letter from 'a' to 'z'. It will find all lowercase letters in the text.
+
+```// [a-z] - Matches any lowercase letter from 'a' to 'z'
+const patternRange = /[a-z]/g;
+const matchesRange = text.match(patternRange);
+console.log("Matches for '[a-z]':", matchesRange);
+```
+- /\d/g: This regex matches any digit (0-9). It finds all digits in the text.
+
+```// \d - Matches any digit
+const patternDigit = /\d/g;
+const matchesDigit = text.match(patternDigit);
+console.log("Matches for '\\d':", matchesDigit);
+```
+- /\D/g: This regex matches any character that is not a digit. It will find all non-digit characters in the text.
+
+```// \D - Matches any non-digit character
+const patternNonDigit = /\D/g;
+const matchesNonDigit = text.match(patternNonDigit);
+console.log("Matches for '\\D':", matchesNonDigit);
+```
+- /\w/g: This regex matches any word character (alphanumeric characters plus underscore). It finds all word characters in the text.
+
+```// \w - Matches any word character (alphanumeric plus underscore)
+const patternWord = /\w/g;
+const matchesWord = text.match(patternWord);
+console.log("Matches for '\\w':", matchesWord);
+```
+- /\W/g: This regex matches any non-word character. It will find all characters that are not alphanumeric or underscore.
+
+```// \W - Matches any non-word character
+const patternNonWord = /\W/g;
+const matchesNonWord = text.match(patternNonWord);
+console.log("Matches for '\\W':", matchesNonWord);
+```
+- /\s/g: This regex matches any whitespace character (such as space, tab, newline). It finds all whitespace characters in the text.
+
+```// \s - Matches any whitespace character
+const patternWhitespace = /\s/g;
+const matchesWhitespace = text.match(patternWhitespace);
+console.log("Matches for '\\s':", matchesWhitespace);
+```
+- /\S/g: This regex matches any non-whitespace character. It will find all characters that are not spaces, tabs, or newlines.
+
+```// \S - Matches any non-whitespace character
+const patternNonWhitespace = /\S/g;
+const matchesNonWhitespace = text.match(patternNonWhitespace);
+console.log("Matches for '\\S':", matchesNonWhitespace);
+```
 
 ### Flags
 
