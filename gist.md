@@ -576,5 +576,5 @@ console.log("Negative Look-Behind matches:", matchesNegativeLookBehind);
 
 ## Author
 
-This tutorial was writen by : Nicolas pace
+This tutorial was writen by Nicolas pace on a template provided by UNCC and assitance from chatGPT
 github link: [text](https://github.com/Eon1220)
