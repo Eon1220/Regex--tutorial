@@ -327,22 +327,22 @@ while ((match2 = patternEmailPhone.exec(text2)) !== null) {
 Example: const text = "a b c 1 2 3 A B C ! @ #";
 
 - /[abc]/g: Matches any one of the characters 'a', 'b', or 'c'. Finds all instances of these characters in the text.
-
-```// Simple Character Class [abc] - Matches 'a', 'b', or 'c'
+```
+// Simple Character Class [abc] - Matches 'a', 'b', or 'c'
 const patternSimpleClass = /[abc]/g;
 const matchesSimpleClass = text.match(patternSimpleClass);
 console.log("Matches for '[abc]':", matchesSimpleClass);
 ```
 - /[a-z]/g: Matches any lowercase letter from 'a' to 'z'. Finds all lowercase letters in the text.
-
-```// Range of Characters [a-z] - Matches any lowercase letter
+```
+// Range of Characters [a-z] - Matches any lowercase letter
 const patternLowercase = /[a-z]/g;
 const matchesLowercase = text.match(patternLowercase);
 console.log("Matches for '[a-z]':", matchesLowercase);
 ```
 - /[^abc]/g: Matches any character except 'a', 'b', or 'c'. Finds all characters that are not 'a', 'b', or 'c'.
-
-```// Negated Character Class [^abc] - Matches any character except 'a', 'b', or 'c'
+```
+// Negated Character Class [^abc] - Matches any character except 'a', 'b', or 'c'
 const patternNegatedClass = /[^abc]/g;
 const matchesNegatedClass = text.match(patternNegatedClass);
 console.log("Matches for '[^abc]':", matchesNegatedClass);
@@ -354,8 +354,8 @@ console.log("Matches for '[^abc]':", matchesNegatedClass);
     - \W: Matches any non-word character. Finds all characters that are not alphanumeric or underscores.
     - \s: Matches any whitespace character (spaces, tabs, newlines). Finds all whitespace characters in the text.
     - \S: Matches any non-whitespace character. Finds all characters that are not spaces, tabs, or newlines.
-
-```// Predefined Character Classes
+```
+// Predefined Character Classes
 const patternDigit = /\d/g;  // Matches any digit
 const matchesDigit = text.match(patternDigit);
 console.log("Matches for '\\d':", matchesDigit);
@@ -381,8 +381,8 @@ const matchesNonWhitespace = text.match(patternNonWhitespace);
 console.log("Matches for '\\S':", matchesNonWhitespace);
 ```
 - /[a-zA-Z]/g: Matches any letter, either lowercase or uppercase. Finds all letters in the text.
-
-```// Character Class Intervals [a-zA-Z] - Matches any letter
+```
+// Character Class Intervals [a-zA-Z] - Matches any letter
 const patternLetters = /[a-zA-Z]/g;
 const matchesLetters = text.match(patternLetters);
 console.log("Matches for '[a-zA-Z]':", matchesLetters);
@@ -394,8 +394,8 @@ Example: const text = "'div Content 1 div div Content 2 /div"; (div's are ment t
 
 - Greedy Matching (/div.*<\/div>/g):
     - The .* quantifier is greedy and tries to match as much text as possible. In the example, it matches from the first div to the last /div, including everything in between. As a result, the entire string div Content 1/div div Content 2/div is matched.
-
-```// Greedy Matching - Matches the longest possible string
+```
+// Greedy Matching - Matches the longest possible string
 const patternGreedy = /<div>.*<\/div>/g;
 const matchesGreedy = text.match(patternGreedy);
 console.log("Greedy match:", matchesGreedy); 
@@ -403,8 +403,8 @@ console.log("Greedy match:", matchesGreedy);
 ```
 - Lazy Matching (/div.*?<\/div>/g):
     - The .*? quantifier is lazy and tries to match as little text as necessary. It matches the shortest possible string that satisfies the pattern. In the example, it matches each div block separately, resulting in div Content 1 div and div Content 2 /div.
-
-```// Lazy Matching - Matches the shortest possible string
+```
+// Lazy Matching - Matches the shortest possible string
 const patternLazy = /<div>.*?<\/div>/g;
 const matchesLazy = text.match(patternLazy);
 console.log("Lazy match:", matchesLazy);
@@ -412,10 +412,114 @@ console.log("Lazy match:", matchesLazy);
 ```
 
 ### Boundaries
+- Boundaries refer to special assertions that define the positions in the text where a pattern can match. They do not consume characters but assert that a certain position is valid for a match.
+
+Example: const text = "The quick brown fox jumps over the lazy dog";
+
+- Word Boundaries \b: /\bfox\b/g: Matches the word "fox" as a whole word, but not as part of another word.
+
+```
+// Word Boundaries \b - Matches whole words
+const patternWordBoundary = /\bfox\b/g;
+const matchesWordBoundary = text.match(patternWordBoundary);
+console.log("Matches for '\\bfox\\b':", matchesWordBoundary); 
+// Output: [ 'fox' ]
+```
+- Non-Word Boundaries \B: /\Bfox\B/g: Attempts to match "fox" within other words but does not match "fox" as a standalone word.
+```
+// Non-Word Boundaries \B - Matches within words
+const patternNonWordBoundary = /\Bfox\B/g;
+const matchesNonWordBoundary = text.match(patternNonWordBoundary);
+console.log("Matches for '\\Bfox\\B':", matchesNonWordBoundary);
+// Output: null
+```
+- Start of String ^: /^The/g: Matches "The" only if it is at the start of the string.
+
+```
+// Start of String ^ - Matches at the beginning
+const patternStart = /^The/g;
+const matchesStart = text.match(patternStart);
+console.log("Matches for '^The':", matchesStart); 
+// Output: [ 'The' ]
+```
+- End of String $: /dog$/g: Matches "dog" only if it is at the end of the string.
+```
+// End of String $ - Matches at the end
+const patternEnd = /dog$/g;
+const matchesEnd = text.match(patternEnd);
+console.log("Matches for 'dog$':", matchesEnd); 
+// Output: [ 'dog' ]
+```
+- Positive Lookahead (?=...): \d(?=\D): Looks for digits followed by a non-digit. In the provided text, no such pattern is present.
+```
+// Positive Lookahead (?=...) - Matches digits followed by a non-digit
+const patternLookahead = /\d(?=\D)/g;
+const matchesLookahead = text.match(patternLookahead);
+console.log("Matches for '\\d(?=\\D)':", matchesLookahead);
+// Output: null (No digits followed by non-digits in this text)
+```
+- Negative Lookahead (?!...):\d(?!\d): Looks for a digit not followed by another digit. In the text "123 456 789", this matches the last digits in each group ("3", "6", "9").
+```
+// Negative Lookahead (?!...) - Matches digits not followed by another digit
+const textWithNumbers = "123 456 789";
+const patternNegativeLookahead = /\d(?!\d)/g;
+const matchesNegativeLookahead = textWithNumbers.match(patternNegativeLookahead);
+console.log("Matches for '\\d(?!\\d)':", matchesNegativeLookahead);
+// Output: [ '3', '6', '9' ]
+```
 
 ### Back-references
+- Back-references allow you to refer to previously captured groups within the same regular expression. This means you can match the same text that was matched by a capture group earlier in the pattern. Back-references are particularly useful for matching repeated patterns or validating data that needs to be consistent within a string.
+
+- Example:
+    - const text1 = "word word";
+    - const text2 = "hello hello";
+    - const text3 = "repeat repeat";
+    - const text4 = "no match example example";
+
+- 
+```
+// Regex with back-references
+const pattern = /(\w+)\s\1/g;
+```
+- Repeated Words:
+    - Pattern: (\w+)\s\1
+        - (\w+): Captures a sequence of word characters.
+        - \s: Matches a whitespace character (space).
+        - \1: Refers to the text captured by the first group, meaning the pattern will match if the second occurrence of the word is the same as the first.
+    - text1, text2, and text3 all match the pattern because they contain repeated words. 
+    - text4 does not match because "example" is not repeated immediately after the first instance.
+```
+// Matching repeated words
+const matches1 = text1.match(pattern);
+const matches2 = text2.match(pattern);
+const matches3 = text3.match(pattern);
+const matches4 = text4.match(pattern);
+
+console.log("Matches for 'word word':", matches1); // Output: [ 'word word' ]
+console.log("Matches for 'hello hello':", matches2); // Output: [ 'hello hello' ]
+console.log("Matches for 'repeat repeat':", matches3); // Output: [ 'repeat repeat' ]
+console.log("Matches for 'no match example example':", matches4); // Output: null
+```
+- Matching Parentheses:
+
+    - Pattern: \((\w+)\)\s\(\1\)
+        - \((\w+)\): Captures a word inside parentheses.
+        - \s: Matches a space.
+        - \(\1\): Matches the same word captured earlier, again inside parentheses.
+    - textWithParentheses contains matching pairs of parentheses with the same word inside, and thus it matches the pattern.
+```
+// More complex example: Matching parentheses
+const textWithParentheses = "((foo)) and ((bar))";
+const patternParentheses = /\((\w+)\)\s\(\1\)/g;
+
+const matchesParentheses = textWithParentheses.match(patternParentheses);
+
+console.log("Matches for '((foo)) and ((bar))':", matchesParentheses); // Output: [ '((foo)) and ((foo))' ]
+```
 
 ### Look-ahead and Look-behind
+- 
 
 ## Author
 
