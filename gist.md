@@ -322,8 +322,94 @@ while ((match2 = patternEmailPhone.exec(text2)) !== null) {
 ```
 
 ### Bracket Expressions
+- Bracket expressions, also known as character classes, are used to match any one of a set of characters. They allow you to specify a range or collection of characters that a single character in the input text should match.
 
+Example: const text = "a b c 1 2 3 A B C ! @ #";
+
+- /[abc]/g: Matches any one of the characters 'a', 'b', or 'c'. Finds all instances of these characters in the text.
+
+```// Simple Character Class [abc] - Matches 'a', 'b', or 'c'
+const patternSimpleClass = /[abc]/g;
+const matchesSimpleClass = text.match(patternSimpleClass);
+console.log("Matches for '[abc]':", matchesSimpleClass);
+```
+- /[a-z]/g: Matches any lowercase letter from 'a' to 'z'. Finds all lowercase letters in the text.
+
+```// Range of Characters [a-z] - Matches any lowercase letter
+const patternLowercase = /[a-z]/g;
+const matchesLowercase = text.match(patternLowercase);
+console.log("Matches for '[a-z]':", matchesLowercase);
+```
+- /[^abc]/g: Matches any character except 'a', 'b', or 'c'. Finds all characters that are not 'a', 'b', or 'c'.
+
+```// Negated Character Class [^abc] - Matches any character except 'a', 'b', or 'c'
+const patternNegatedClass = /[^abc]/g;
+const matchesNegatedClass = text.match(patternNegatedClass);
+console.log("Matches for '[^abc]':", matchesNegatedClass);
+```
+- Predefined Character Classes
+    - \d: Matches any digit (0-9). Finds all digits in the text.
+    - \D: Matches any non-digit character. Finds all characters that are not digits.
+    - \w: Matches any word character (alphanumeric or underscore). Finds all alphanumeric characters and underscores.
+    - \W: Matches any non-word character. Finds all characters that are not alphanumeric or underscores.
+    - \s: Matches any whitespace character (spaces, tabs, newlines). Finds all whitespace characters in the text.
+    - \S: Matches any non-whitespace character. Finds all characters that are not spaces, tabs, or newlines.
+
+```// Predefined Character Classes
+const patternDigit = /\d/g;  // Matches any digit
+const matchesDigit = text.match(patternDigit);
+console.log("Matches for '\\d':", matchesDigit);
+
+const patternNonDigit = /\D/g;  // Matches any non-digit
+const matchesNonDigit = text.match(patternNonDigit);
+console.log("Matches for '\\D':", matchesNonDigit);
+
+const patternWord = /\w/g;  // Matches any word character (alphanumeric plus underscore)
+const matchesWord = text.match(patternWord);
+console.log("Matches for '\\w':", matchesWord);
+
+const patternNonWord = /\W/g;  // Matches any non-word character
+const matchesNonWord = text.match(patternNonWord);
+console.log("Matches for '\\W':", matchesNonWord);
+
+const patternWhitespace = /\s/g;  // Matches any whitespace character
+const matchesWhitespace = text.match(patternWhitespace);
+console.log("Matches for '\\s':", matchesWhitespace);
+
+const patternNonWhitespace = /\S/g;  // Matches any non-whitespace character
+const matchesNonWhitespace = text.match(patternNonWhitespace);
+console.log("Matches for '\\S':", matchesNonWhitespace);
+```
+- /[a-zA-Z]/g: Matches any letter, either lowercase or uppercase. Finds all letters in the text.
+
+```// Character Class Intervals [a-zA-Z] - Matches any letter
+const patternLetters = /[a-zA-Z]/g;
+const matchesLetters = text.match(patternLetters);
+console.log("Matches for '[a-zA-Z]':", matchesLetters);
+```
 ### Greedy and Lazy Match
+- Greedy and lazy (or non-greedy) matching refer to how the regex engine handles quantifiers that match a variable number of characters.
+
+Example: const text = "'div Content 1 div div Content 2 /div"; (div's are ment to be in <>)
+
+- Greedy Matching (/div.*<\/div>/g):
+    - The .* quantifier is greedy and tries to match as much text as possible. In the example, it matches from the first div to the last /div, including everything in between. As a result, the entire string div Content 1/div div Content 2/div is matched.
+
+```// Greedy Matching - Matches the longest possible string
+const patternGreedy = /<div>.*<\/div>/g;
+const matchesGreedy = text.match(patternGreedy);
+console.log("Greedy match:", matchesGreedy); 
+// Output: [ '<div>Content 1</div><div>Content 2</div>' ]
+```
+- Lazy Matching (/div.*?<\/div>/g):
+    - The .*? quantifier is lazy and tries to match as little text as necessary. It matches the shortest possible string that satisfies the pattern. In the example, it matches each div block separately, resulting in div Content 1 div and div Content 2 /div.
+
+```// Lazy Matching - Matches the shortest possible string
+const patternLazy = /<div>.*?<\/div>/g;
+const matchesLazy = text.match(patternLazy);
+console.log("Lazy match:", matchesLazy);
+// Output: [ '<div>Content 1</div>', '<div>Content 2</div>' ]
+```
 
 ### Boundaries
 
